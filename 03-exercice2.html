@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercice 2</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+
+    <style>
+
+        main {
+            max-width: 990px;
+            width: 100%;
+            height: auto;
+            margin: 0 auto;
+        }
+
+        section {
+            width: 100%;
+            height: auto;
+            min-height: 200px;
+            margin-bottom: 10px;
+            background-image: linear-gradient(0deg, #EEE 0%, #FFF 100%);
+            border: 1px solid #EEE;
+        }
+
+        h1 {
+            font-family: 'Roboto Slab', serif;
+            font-weight: normal;
+            text-align: center;
+            color: #000;
+        }
+
+        article {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        mark {
+          background: white;
+          color: red;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- CONSIGNE : Avec l'aide de jQuery, vous devrez :
+
+       1. Définir une structure HTML5 & CSS3 pour afficher des articles.
+
+       2. Afficher une liste d'articles à partir de l'API :  https://jsonplaceholder.typicode.com/posts
+
+       3. BONUS : Afficher uniquement les 10 premiers articles.
+
+       4. BONUS : Mettre en Place Markjs.io afin de surligner des mots dans les différents articles à l'aide d'un champs input.
+
+    -->
+    <input type="text" name="recherche" value="" placeholder="Surligner ça">
+    <main>
+      <!--<section>
+        <header>
+                <h1>TITRE</h1>
+        </header>
+            <article>
+                MON CONTENU
+            </article> -->
+      </section>
+    </main>
+
+    <!-- Intégration de jQuery -->
+    <script
+    src="https://code.jquery.com/jquery-3.1.1.min.js"
+    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+    crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.0/jquery.mark.min.js">
+
+    </script>
+
+
+    <script>
+      $(function() {
+
+        for (let i = 1; i < 11; i++)
+        {
+          $.getJSON(`https://jsonplaceholder.typicode.com/posts/${i}`, function (résultat) {
+            $(`
+              <section>
+              <header><h1>${résultat.title}</h1></header>
+              <article>${résultat.body}</article>
+              </section>
+            `).appendTo($('main'));
+            //console.log(résultat);
+          });
+
+        }
+
+        var mark = function ()
+        {
+          let mot = $("input[name='recherche']").val();
+
+          // the new keyword inside the context
+          $("main").unmark({
+            done: function () {$("main").mark(mot);}
+          });
+        };
+
+
+        $("input[name='recherche']").on("input", mark);
+
+    });
+
+    </script>
+
+</body>
+</html>
